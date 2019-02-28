@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+div.one {
+    height: 200px;
+    background-color: blue;
+}
+
+div.two {
+    height: 600px;
+    width: 200px;
+    background-color: green;
+}
+
+div.three {
+    height: 600px;
+    width: 500px;
+    background-color: red;
+}
