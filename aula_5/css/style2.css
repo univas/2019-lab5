@@ -4,18 +4,19 @@
 }
 
 div.one {
-    height: 200px;
+    height: 100px;
     background-color: blue;
 }
 
 div.two {
-    height: 600px;
+    height: 550px;
     width: 200px;
     background-color: green;
+    float: left;
 }
 
 div.three {
-    height: 600px;
-    width: 500px;
+    height: 550px;
+    width: 1350px;
     background-color: red;
 }

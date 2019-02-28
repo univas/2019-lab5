@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    height: 300px;
+    border: 2px dashed red;
+    /*
+    background-color: lightblue;
+    background-image: url('../img/world_cup.jpg');
+    background-repeat: no-repeat;
+    background-position: center;*/
+
+    background: lightblue url('../img/world_cup.jpg') 
+    center no-repeat;
+}
+
+li {
+    display: inline;
+}
+
+li a {
+    text-decoration: none;
+    background-color: lightgreen;
+}
+
+li ul {
+    display: none;
+}
+
+ul li:hover ul {
+    display: inline;
+}
+
+input[type="text"] {
+    padding : 5px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 95%;
+}
+
+td {
+    border: 1px solid black;
+}
+
+tr:nth-child(odd) {
+    background-color: lightgray;
+}
+
+tr:nth-child(even) {
+    background-color: darkgray;
+}
