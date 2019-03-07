@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap!</title>
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
+    <style>
+        .content {
+            background-color: gray;
+            height: 150px;
+        }
+
+        h1 {
+            font-family: 'Aldrich', sans-serif;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-12">
+                <h1>What is Bootstrap???</h1>
+
+                <input type="button" value="Click Here!" class="btn btn-primary btn-lg">
+            </div>
+            <div class="col-sm-4 col-12">
+                <h1>Why I need to use this???</h1>
+
+                <input type="button" value="Click Here!" class="btn btn-outline-success btn-sm">
+            </div>
+            <div class="col-sm-4 col-12">
+                <h1>Examples!</h1>
+
+                <input type="button" value="Click Here!" class="btn btn-light btn-block">
+            </div>
+        </div>
+
+        <div class="row">
+            <img src="../images/earth.jpg" class="img-thumbnail mx-auto d-block img-fluid">
+        </div>
+
+        <div class="row content text-center">
+            <div class="col-sm-2 align-self-start green">Ola</div>
+            <div class="col-sm-6 align-self-center blue">Ola</div>
+            <div class="col-sm-4 align-self-end red">Ola</div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 green">Ola</div>
+            <div class="col-4 blue offset-md-2">Ola</div>
+        </div>
+
+
+        <table class="table table-striped">
+            <tr>
+                <td>Um</td>
+                <td>Dois</td>
+            </tr>
+            <tr>
+                <td>Três</td>
+                <td>Quatro</td>
+            </tr>
+            <tr>
+                <td>Cinco</td>
+                <td>Seis</td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+</body>
+
+</html>
