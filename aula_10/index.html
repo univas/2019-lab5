@@ -3,19 +3,26 @@
     <head>
         <meta charset="utf-8">
         <title>Aula 10</title>
+
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <h1>Lista de Convidados</h1>
-
+        
         <form>
             <div>
                 <label>Nome:</label>
                 <input type="text" id="name">
+                <span id="msgError" class="error hide">
+                    Por favor, preencha o nome
+                </span>
             </div>
-
+            
             <input type="button" value="Adicionar" id="addBtn">
         </form>
-
+        
         <ul id="convidados"></ul>
+        
+        <script src="js/index.js"></script>
     </body>
 </html>
