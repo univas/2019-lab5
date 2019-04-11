@@ -24,7 +24,36 @@ function createNewLine(inputIds) {
         tr.appendChild(createColumn(inputIds[i]));
     }
 
+    createButtonColumns(tr);
     return tr;
+}
+
+function createButtonColumns(tr) {
+    var buttonsContent = ['Editar', 'Excluir'];
+
+    for (var i = 0; i < buttonsContent.length; i++) {
+        tr.appendChild(createButtonColumn(buttonsContent[i]));
+    }
+}
+
+function createButtonColumn(content) {
+    var td = document.createElement('td');
+    var input = document.createElement('input');
+    input.type = 'button';
+    input.value = content;
+    if (content === 'Excluir') {
+        input.onclick = removeLine;
+    }
+    td.appendChild(input);
+    return td;
+}
+
+function removeLine() {
+    var td = this.parentNode;
+    var tr = td.parentNode;
+    var table = document.getElementById('alunos');
+    var tbody = table.tBodies[0];
+    tbody.removeChild(tr);
 }
 
 function createColumn(id) {
