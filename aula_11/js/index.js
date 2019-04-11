@@ -1,3 +1,6 @@
+var lineIndexToEdit = -1;
+var inputIds = ['name', 'email', 'cpf'];
+
 start();
 
 function start() {
@@ -8,16 +11,30 @@ function start() {
 }
 
 function addNewAluno() {
-    var inputIds = ['name', 'email', 'cpf'];
-
-    if (isAllFieldsValid(inputIds)) {
-        var newLine = createNewLine(inputIds);
-        addNewLineInTable(newLine);
-        clearFields(inputIds);
+    if (isAllFieldsValid()) {
+        if (lineIndexToEdit === -1) {
+            var newLine = createNewLine();
+            addNewLineInTable(newLine);
+        } else {
+            editExistLine();
+        }
+        clearFields();
+        lineIndexToEdit = -1;
     }
 }
 
-function createNewLine(inputIds) {
+function editExistLine() {
+    var table = document.getElementById('alunos');
+    var tbody = table.tBodies[0];
+    var tr = tbody.children[lineIndexToEdit - 1];
+
+    for (var i = 0; i < inputIds.length; i++) {
+        var input = document.getElementById(inputIds[i]);
+        tr.children[i].innerHTML = input.value;
+    }
+}
+
+function createNewLine() {
     var tr = document.createElement('tr');
 
     for (var i = 0; i < inputIds.length; i++) {
@@ -43,9 +60,23 @@ function createButtonColumn(content) {
     input.value = content;
     if (content === 'Excluir') {
         input.onclick = removeLine;
+    } else if (content === 'Editar') {
+        input.onclick = editLine;
     }
+
     td.appendChild(input);
     return td;
+}
+
+function editLine() {
+    var td = this.parentNode;
+    var tr = td.parentNode;
+    lineIndexToEdit = tr.rowIndex;
+    
+    for (var i = 0; i < inputIds.length; i++) {
+        var input = document.getElementById(inputIds[i]);
+        input.value = tr.children[i].innerHTML;
+    }
 }
 
 function removeLine() {
@@ -70,7 +101,7 @@ function addNewLineInTable(newTr) {
     tbody.appendChild(newTr);
 }
 
-function isAllFieldsValid(inputIds) {
+function isAllFieldsValid() {
     var allFieldsValid = true;
 
     for (var i = 0; i < inputIds.length; i++) {
@@ -106,7 +137,7 @@ function getSpanErrorElement(inputId) {
     return document.getElementById(inputId + 'Error');
 }
 
-function clearFields(inputIds) {
+function clearFields() {
     for (var i = 0; i < inputIds.length; i++) {
         var input = document.getElementById(inputIds[i]);
         input.value = '';
