@@ -13,6 +13,7 @@ function start() {
 function addNewAluno() {
     if (isAllFieldsValid()) {
         if (lineIndexToEdit === -1) {
+            removeEmptyLine();
             var newLine = createNewLine();
             addNewLineInTable(newLine);
         } else {
@@ -24,8 +25,7 @@ function addNewAluno() {
 }
 
 function editExistLine() {
-    var table = document.getElementById('alunos');
-    var tbody = table.tBodies[0];
+    var tbody = getTbody();
     var tr = tbody.children[lineIndexToEdit - 1];
 
     for (var i = 0; i < inputIds.length; i++) {
@@ -82,9 +82,9 @@ function editLine() {
 function removeLine() {
     var td = this.parentNode;
     var tr = td.parentNode;
-    var table = document.getElementById('alunos');
-    var tbody = table.tBodies[0];
+    var tbody = getTbody();
     tbody.removeChild(tr);
+    checkEmptyTable();
 }
 
 function createColumn(id) {
@@ -96,8 +96,12 @@ function createColumn(id) {
 }
 
 function addNewLineInTable(newTr) {
-    var table = document.getElementById('alunos');
-    var tbody = table.tBodies[0];
+    var tbody = getTbody();
+    if (tbody.children.length % 2 === 0) {
+        newTr.style.backgroundColor = 'lightGray';
+    } else {
+        newTr.style.backgroundColor = 'darkGray';
+    }
     tbody.appendChild(newTr);
 }
 
@@ -144,5 +148,32 @@ function clearFields() {
         if (i === 0) {
             input.focus();
         }
+    }
+}
+
+function removeEmptyLine() {
+    var line = document.getElementById('emptyLine');
+    if (line) {
+        var tbody = getTbody();
+        tbody.removeChild(line);
+    }
+}
+
+function getTbody() {
+    var table = document.getElementById('alunos');
+    return table.tBodies[0];
+}
+
+function checkEmptyTable() {
+    var tbody = getTbody();
+    if (tbody.children.length === 0) {
+        var td = document.createElement('td');
+        td.colSpan = 5;
+        var textNode = document.createTextNode('Nenhum aluno cadastrado ainda!');
+        td.appendChild(textNode);
+        var tr = document.createElement('tr');
+        tr.id = 'emptyLine';
+        tr.appendChild(td);
+        tbody.appendChild(tr);
     }
 }
