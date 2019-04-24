@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    width: 332px;
+    border: 1px solid black;
+    margin: 50px auto;
+}
+
+div input {
+    width: 80px;
+    height: 80px;
+}
