@@ -1,0 +1,27 @@
+div.content {
+    width: 400px;
+    height: 400px;
+    margin: 30px auto;
+    border: 2px solid gray;
+    padding: 15px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form input[type="number"] {
+    width: 90%;
+}
+
+div.fields {
+    margin-bottom: 10px;
+}
+
+span.error {
+    color: red;
+}
+
+span.hide {
+    display: none;
+}

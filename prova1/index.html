@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Prova 1</title>
+
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div class="content">
+
+            <h1>Cálculo de Investimento</h1>
+            
+            <form>
+                <label for="month">Número de meses:</label>
+                <div class="fields">
+                    <input type="number" id="month">
+                    <span id="monthError" class="error hide">*Campo Obrigatório</span>
+                </div>
+            
+                <label for="interest">Taxa de juros mensal:</label>
+                <div class="fields">
+                    <input type="number" id="interest">
+                    <span id="interestError" class="error hide">*Campo Obrigatório</span>
+                </div>
+            
+                <label for="capital">Valor do depósito regular:</label>
+                <div class="fields">
+                    <input type="number" id="capital">
+                    <span id="capitalError" class="error hide">*Campo Obrigatório</span>
+                </div>
+
+                <input type="button" value="Calcular" id="calcButton">
+
+                <p id="result"></p>
+            </form>
+        </div>
+        <script src="js/index.js"></script>
+    </body>
+</html>
