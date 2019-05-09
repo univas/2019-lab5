@@ -14,19 +14,16 @@ function start() {
 function addNewAluno() {
     if (isAllFieldsValid()) {
         var student = getStudentObject();
-        students.push(student);
+        
+        if (lineIndexToEdit === -1) {
+            students.push(student);
+
+        } else {
+            updateStudent(student);
+        }
 
         clearTableData();
         populateTableData();
-        /*
-        if (lineIndexToEdit === -1) {
-            removeEmptyLine();
-            var newLine = createNewLine();
-            addNewLineInTable(newLine);
-        } else {
-            editExistLine();
-        }
-        */
         clearFields();
         lineIndexToEdit = -1;
     }
@@ -36,14 +33,14 @@ function getStudentObject() {
     var inputName = document.getElementById('name');
     var inputEmail = document.getElementById('email');
     var inputCpf = document.getElementById('cpf');
+    var timestamp = (new Date()).getTime();
 
-    var newStudent = {
+    return {
+        id: timestamp,
         name: inputName.value,
         email: inputEmail.value,
         cpf: inputCpf.value
     };
-
-    return newStudent;
 }
 
 function clearTableData() {
@@ -113,8 +110,10 @@ function editLine() {
 function removeLine() {
     var td = this.parentNode;
     var tr = td.parentNode;
+    var cpf = tr.children[2].innerHTML;
     var tbody = getTbody();
     tbody.removeChild(tr);
+    removeStudentFromArray(cpf);
     checkEmptyTable();
 }
 
@@ -206,4 +205,23 @@ function checkEmptyTable() {
         tr.appendChild(td);
         tbody.appendChild(tr);
     }
+}
+
+function removeStudentFromArray(cpf) {
+    var index = getStudentIndexByCPF(cpf);
+    students.splice(index, 1);
+}
+
+function updateStudent(student) {
+    var index = getStudentIndexByCPF(student.cpf);
+    var oldStudent = students[index];
+    oldStudent.name = student.name;
+    oldStudent.email = student.email;
+    oldStudent.cpf = student.cpf;
+}
+
+function getStudentIndexByCPF(cpf) {
+    return students.findIndex(function(element) {
+        return element.cpf === cpf;
+    });
 }
