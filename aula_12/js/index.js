@@ -1,4 +1,5 @@
 var lineIndexToEdit = -1;
+var indexEditingStudent = null;
 var inputIds = ['name', 'email', 'cpf'];
 var students = [];
 
@@ -17,11 +18,12 @@ function addNewAluno() {
         
         if (lineIndexToEdit === -1) {
             students.push(student);
-
+            
         } else {
             updateStudent(student);
         }
-
+        
+        saveInLocalStorage();
         clearTableData();
         populateTableData();
         clearFields();
@@ -33,10 +35,8 @@ function getStudentObject() {
     var inputName = document.getElementById('name');
     var inputEmail = document.getElementById('email');
     var inputCpf = document.getElementById('cpf');
-    var timestamp = (new Date()).getTime();
 
     return {
-        id: timestamp,
         name: inputName.value,
         email: inputEmail.value,
         cpf: inputCpf.value
@@ -105,6 +105,9 @@ function editLine() {
         var input = document.getElementById(inputIds[i]);
         input.value = tr.children[i].innerHTML;
     }
+
+    var cpf = tr.children[2].innerHTML;
+    indexEditingStudent = getStudentIndexByCPF(cpf);
 }
 
 function removeLine() {
@@ -210,11 +213,11 @@ function checkEmptyTable() {
 function removeStudentFromArray(cpf) {
     var index = getStudentIndexByCPF(cpf);
     students.splice(index, 1);
+    saveInLocalStorage();
 }
 
 function updateStudent(student) {
-    var index = getStudentIndexByCPF(student.cpf);
-    var oldStudent = students[index];
+    var oldStudent = students[indexEditingStudent];
     oldStudent.name = student.name;
     oldStudent.email = student.email;
     oldStudent.cpf = student.cpf;
@@ -224,4 +227,9 @@ function getStudentIndexByCPF(cpf) {
     return students.findIndex(function(element) {
         return element.cpf === cpf;
     });
+}
+
+function saveInLocalStorage() {
+    var studentsToBeSave = JSON.stringify(students);
+    localStorage.setItem('STUDENTS', studentsToBeSave);
 }
