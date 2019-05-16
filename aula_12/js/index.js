@@ -233,3 +233,16 @@ function saveInLocalStorage() {
     var studentsToBeSave = JSON.stringify(students);
     localStorage.setItem('STUDENTS', studentsToBeSave);
 }
+
+window.onload = function() {
+    loadDataFromLocalStorage();
+};
+
+function loadDataFromLocalStorage() {
+    var studentsStr = localStorage.getItem('STUDENTS');
+    if (studentsStr) {
+        students = JSON.parse(studentsStr);
+        clearTableData();
+        populateTableData();
+    }
+}
