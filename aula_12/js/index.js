@@ -16,6 +16,12 @@ function addNewAluno() {
     if (isAllFieldsValid()) {
         var student = getStudentObject();
         
+        var index = getStudentIndexByCPF(student.cpf);
+        if (index > -1 && index !== indexEditingStudent) {
+            alert('CPF não pode ser repetido!');
+            return;
+        }
+
         if (lineIndexToEdit === -1) {
             students.push(student);
             
