@@ -1,9 +1,6 @@
-var lineIndexToEdit = -1;
-var indexEditingStudent = null;
+var idStudentEdit = -1;
 var inputIds = ['name', 'email', 'cpf'];
 var students = [];
-
-start();
 
 function start() {
     $('#addBtn').click(function() {
@@ -14,25 +11,14 @@ function start() {
 function addNewAluno() {
     if (isAllFieldsValid()) {
         var student = getStudentObject();
-        
-        var index = getStudentIndexByCPF(student.cpf);
-        if (index > -1 && index !== indexEditingStudent) {
-            alert('CPF não pode ser repetido!');
-            return;
-        }
-
-        if (lineIndexToEdit === -1) {
-            students.push(student);
-            
-        } else {
+        if (idStudentEdit > -1) {
             updateStudent(student);
+        } else {
+            saveStudent(student);
         }
         
-        saveInLocalStorage();
-        clearTableData();
-        populateTableData();
         clearFields();
-        lineIndexToEdit = -1;
+        idStudentEdit = -1;
     }
 }
 
@@ -62,37 +48,27 @@ function populateTableData() {
         tr.appendChild(createColumn(student.name));
         tr.appendChild(createColumn(student.email));
         tr.appendChild(createColumn(student.cpf));
-        createButtonColumns(tr);
+        createButtonColumns(tr, student.id);
         tbody.appendChild(tr);
     }
 }
 
-function editExistLine() {
-    var tbody = getTbody();
-    var tr = tbody.children[lineIndexToEdit - 1];
-
-    for (var i = 0; i < inputIds.length; i++) {
-        var input = document.getElementById(inputIds[i]);
-        tr.children[i].innerHTML = input.value;
-    }
-}
-
-
-function createButtonColumns(tr) {
+function createButtonColumns(tr, id) {
     var buttonsContent = ['Editar', 'Excluir'];
 
     for (var i = 0; i < buttonsContent.length; i++) {
-        tr.appendChild(createButtonColumn(buttonsContent[i]));
+        tr.appendChild(createButtonColumn(buttonsContent[i], id));
     }
 }
 
-function createButtonColumn(content) {
+function createButtonColumn(content, id) {
     var td = document.createElement('td');
     var input = document.createElement('input');
     input.type = 'button';
     input.value = content;
+    input.name = id;
     if (content === 'Excluir') {
-        input.onclick = removeLine;
+        input.onclick = deleteStudent;
     } else if (content === 'Editar') {
         input.onclick = editLine;
     }
@@ -102,27 +78,14 @@ function createButtonColumn(content) {
 }
 
 function editLine() {
+    idStudentEdit = this.name
     var td = this.parentNode;
     var tr = td.parentNode;
-    lineIndexToEdit = tr.rowIndex;
     
     for (var i = 0; i < inputIds.length; i++) {
         var input = document.getElementById(inputIds[i]);
         input.value = tr.children[i].innerHTML;
     }
-
-    var cpf = tr.children[2].innerHTML;
-    indexEditingStudent = getStudentIndexByCPF(cpf);
-}
-
-function removeLine() {
-    var td = this.parentNode;
-    var tr = td.parentNode;
-    var cpf = tr.children[2].innerHTML;
-    var tbody = getTbody();
-    tbody.removeChild(tr);
-    removeStudentFromArray(cpf);
-    checkEmptyTable();
 }
 
 function createColumn(content) {
@@ -130,16 +93,6 @@ function createColumn(content) {
     var textNode = document.createTextNode(content);
     td.appendChild(textNode);
     return td;
-}
-
-function addNewLineInTable(newTr) {
-    var tbody = getTbody();
-    if (tbody.children.length % 2 === 0) {
-        newTr.style.backgroundColor = 'lightGray';
-    } else {
-        newTr.style.backgroundColor = 'darkGray';
-    }
-    tbody.appendChild(newTr);
 }
 
 function isAllFieldsValid() {
@@ -188,14 +141,6 @@ function clearFields() {
     }
 }
 
-function removeEmptyLine() {
-    var line = document.getElementById('emptyLine');
-    if (line) {
-        var tbody = getTbody();
-        tbody.removeChild(line);
-    }
-}
-
 function getTbody() {
     var table = document.getElementById('alunos');
     return table.tBodies[0];
@@ -215,32 +160,9 @@ function checkEmptyTable() {
     }
 }
 
-function removeStudentFromArray(cpf) {
-    var index = getStudentIndexByCPF(cpf);
-    students.splice(index, 1);
-    saveInLocalStorage();
-}
-
-function updateStudent(student) {
-    var oldStudent = students[indexEditingStudent];
-    oldStudent.name = student.name;
-    oldStudent.email = student.email;
-    oldStudent.cpf = student.cpf;
-}
-
-function getStudentIndexByCPF(cpf) {
-    return students.findIndex(function(element) {
-        return element.cpf === cpf;
-    });
-}
-
-function saveInLocalStorage() {
-    var studentsToBeSave = JSON.stringify(students);
-    localStorage.setItem('STUDENTS', studentsToBeSave);
-}
-
 window.onload = function() {
     loadDataFromAPI();
+    start();
 };
 
 function loadDataFromAPI() {
@@ -248,5 +170,49 @@ function loadDataFromAPI() {
         students = data;
         clearTableData();
         populateTableData();
+        checkEmptyTable();
     });
+}
+
+function saveStudent(student) {
+    $.ajax(
+        "https://pacific-wave-50441.herokuapp.com/api/aluno", 
+        {
+            type: 'POST',
+            data: JSON.stringify(student), 
+            contentType: 'application/json',
+            success: function( data ) {
+                loadDataFromAPI();
+            }
+        }
+    );
+}
+
+function deleteStudent() {
+    var idStudent = this.name;
+
+    $.ajax(
+        "https://pacific-wave-50441.herokuapp.com/api/aluno/" + idStudent, 
+        {
+            type: 'DELETE',
+            contentType: 'application/json',
+            success: function( data ) {
+                loadDataFromAPI();
+            }
+        }
+    );
+}
+
+function updateStudent(student) {
+    $.ajax(
+        "https://pacific-wave-50441.herokuapp.com/api/aluno/" + idStudentEdit, 
+        {
+            type: 'PUT',
+            data: JSON.stringify(student), 
+            contentType: 'application/json',
+            success: function( data ) {
+                loadDataFromAPI();
+            }
+        }
+    );
 }
