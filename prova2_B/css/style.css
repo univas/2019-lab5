@@ -1,0 +1,35 @@
+h1 {
+    text-align: center;
+}
+
+h2 {
+    float: right;
+    margin: 25px;
+}
+
+ul {
+    clear: right;
+    list-style: none;
+}
+
+li {
+    margin: 15px 25px;
+    padding: 15px;
+    line-height: 50px;
+    font-size: 20px;    
+    background-color: azure;
+    border-radius: 30px;
+}
+
+span {
+    float: right;
+    width: 32px;
+    height: 32px;
+    background-image: url('../images/Ok-icon.png');
+    cursor: pointer;
+}
+
+li.selected {
+    background-color: #0b2043;
+    color: white;
+}
